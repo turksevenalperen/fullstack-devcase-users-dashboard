@@ -12,6 +12,11 @@ const app = express();
 console.log('🚀 SERVER STARTING - CORS & MIDDLEWARE INITIALIZING');
 
 // Güvenli domain listesini ortam değişkenlerinden al
+// Railway ortam değişkenlerinin doğru okunduğunu kontrol etmek için ekstra loglama eklenmiştir.
+console.log('🔍 Checking environment variables...');
+console.log('   - process.env.ALLOWED_ORIGIN_1:', process.env.ALLOWED_ORIGIN_1);
+console.log('   - process.env.ALLOWED_ORIGIN_2:', process.env.ALLOWED_ORIGIN_2);
+
 const allowedOrigins = [
   process.env.ALLOWED_ORIGIN_1,
   process.env.ALLOWED_ORIGIN_2,
