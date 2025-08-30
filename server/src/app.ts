@@ -8,34 +8,32 @@ import 'dotenv/config';
 
 
 const app = express();
-app.use(express.json());
+
+// En başa bu log'u ekle
+console.log('🚀 SERVER STARTING WITH CORS CONFIG');
+
 const allowedOrigins = [
   'http://localhost:3000',
   'https://fullstack-devcase-users-dashboard-aheijues1.vercel.app'
 ];
 
+console.log('🔍 Allowed Origins:', allowedOrigins);
+
 app.use(cors({
-  origin: '*',
+  origin: function (origin, callback) {
+    console.log('📨 CORS Request from origin:', origin);
+    
+    if (!origin) {
+      console.log('✅ No origin (probably same-origin), allowing');
+      return callback(null, true);
+    }
+    if (allowedOrigins.includes(origin)) {
+      console.log('✅ Origin ALLOWED:', origin);
+      return callback(null, true);
+    } else {
+      console.log('❌ Origin BLOCKED:', origin);
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
-app.use(helmet());
-app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 1000 }));
-
-
-app.get('/api/health', (req: express.Request, res: express.Response) => {
-  res.json({ status: 'ok' });
-});
-
-import authRoutes from './routes/auth';
-import userRoutes from './routes/users';
-
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-
-sequelize.authenticate()
-  .then(() => console.log('Database connected!'))
-  .catch((err) => console.error('Database connection error:', err));
-
-app.use(errorHandler);
-
-export default app;
