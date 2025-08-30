@@ -9,7 +9,14 @@ import 'dotenv/config';
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://fullstack-devcase-users-dashboard.vercel.app'
+];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 app.use(helmet());
 app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 1000 }));
 
