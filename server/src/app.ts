@@ -16,6 +16,8 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 // TEMPORARY: allow all origins for testing (change back after verification)
+// TEMPORARY: allow all origins for testing (change back after verification)
+console.log('⚠️ TEMP CORS ENABLED - allowing all origins for testing');
 app.use(
   cors({
     origin: true,
