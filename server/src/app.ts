@@ -11,11 +11,13 @@ const app = express();
 // Başlangıç logu
 console.log('🚀 SERVER STARTING - CORS & MIDDLEWARE INITIALIZING');
 
-// Güvenli domain listesi
+// Güvenli domain listesini ortam değişkenlerinden al
 const allowedOrigins = [
-  'http://localhost:3000',
-  'https://fullstack-devcase-users-dashboard-aheijues1.vercel.app'
-];
+  process.env.ALLOWED_ORIGIN_1,
+  process.env.ALLOWED_ORIGIN_2,
+].filter(Boolean); // Ortam değişkenlerinden gelen boş veya undefined değerleri filtreler.
+
+console.log('✅ Allowed origins loaded:', allowedOrigins);
 
 // Dinamik CORS kontrolü
 app.use(
