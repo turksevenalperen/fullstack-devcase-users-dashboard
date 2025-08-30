@@ -6,6 +6,7 @@ Bu proje, Next.js tabanlı frontend ve Node.js/Express.js + Sequelize backend il
 
 ## Özellikler
 - **Backend:**
+- Railway ile PostgreSQL deployu
   - Express.js REST API
   - Sequelize + PostgreSQL
   - JWT tabanlı kimlik doğrulama
@@ -115,10 +116,7 @@ npx sequelize db:seed:all
 - **Validation error:** API body şemasına uygun veri gönderin (`firstName`, `lastName` vs.).
 - **Deploy sonrası eski kod:** Railway’de son commit SHA’yı kontrol edin, gerekirse boş commit ile redeploy tetikleyin.
 
-## Ekstra
-- Kod mimarisi modüler ve anlaşılır.
-- Tüm ana case gereksinimleri eksiksiz karşılandı.
-- Test dosyaları ve OpenAPI/Postman koleksiyonu eklenebilir.
+
 
 ## Teknik Detaylar ve Kullandığımız Teknolojiler
 
@@ -134,13 +132,11 @@ Bu bölüm, projede hangi kütüphaneleri, desenleri ve önemli kararları kulla
 - Error Handling: Ortak bir errorHandler middleware'i ile Zod/Sequelize hataları ve custom validation hataları standart bir yanıt formatında döndürülüyor.
 - Testler: Jest ile backend birim/entegrasyon testleri bulunuyor (kısa testler, auth ve users uç noktaları için).
 - Dokümantasyon: `openapi.yaml` ve Postman koleksiyonu (repo içinde) — API uç noktalarını hızlıca keşfetmek için.
-
-### Kısa Mühendislik Kararları (nedenler)
 - Zod seçildi: Tip güvenli ve geliştiricide erken hata yakalama sağlıyor; ayrıca TypeScript ile iyi bütünleşiyor.
 - JWT seçildi: Stateles, kolay ölçeklenebilir oturum yönetimi için uygundur ve frontend ile kullanım kolaylığı sağlar.
 - Sequelize seçildi: Migration/seed araçları hazır, Postgres ile olgun entegrasyonu var.
 
-## API Sözleşmesi (kısa)
+## API Bilgileri
 
 Örnek success response ve bazı istek şekilleri:
 
@@ -165,7 +161,7 @@ Hatalar genelde şu formatta döner: { error: 'message', details?: { ... } }
 - CORS whitelist üretim ortamında sadece frontend domain'lerini içermeli.
 - Rate limiting, brute-force koruması ve account lockout gibi üretim güvenlik önlemleri ileride eklenebilir.
 
-## Değişiklikler — Neler Ekledik / Neler Düzeltildi
+## Değişiklikler — Neler Eklendi
 
 Bu repo üzerine geliştirme yaparken aşağıdaki önemli iyileştirmeler uygulandı:
 
@@ -174,8 +170,5 @@ Bu repo üzerine geliştirme yaparken aşağıdaki önemli iyileştirmeler uygul
 - Parola güvenliği: `bcrypt` ile hashing; seed dosyaları buna göre güncellendi.
 - CORS: Ortam değişkeni tabanlı whitelist ve debug sırasında hızlı test için temporary allow-all seçeneği eklendi (deployta revertleyin).
 - Frontend: `NEXT_PUBLIC_API_URL` ile backend bağlantısı yapılandırıldı, dashboard tabloları gerçek API verisi ile bağlandı.
-- Deployment: Railway (backend) ve Vercel (frontend) için notlar ve sık karşılaşılan deploy sorunlarına çözüm adımları eklendi.
-- README: Kurulum, migration/seed, çalıştırma, deploy ve troubleshooting bölümleri detaylandırıldı.
 
----
-Herhangi bir sorunda veya ek bilgi için bana ulaşabilirsiniz.
+
