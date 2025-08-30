@@ -111,4 +111,62 @@ npx sequelize db:seed:all
 - Tüm ana case gereksinimleri eksiksiz karşılandı.
 - Test dosyaları ve OpenAPI/Postman koleksiyonu eklenebilir.
 
+## Teknik Detaylar ve Kullandığımız Teknolojiler
 
+Bu bölüm, projede hangi kütüphaneleri, desenleri ve önemli kararları kullandığımızı özetler.
+
+- Authentication: JWT tabanlı (JSON Web Tokens). Oturum açtıktan sonra backend bir access token döner; frontend bu token'ı Authorization: Bearer <token> başlığı ile isteklerde kullanır.
+- Parolalar: `bcrypt` ile tek yönlü hashlenir (register endpoint'inde), login sırasında hash karşılaştırılır.
+- Validation: `zod` kullanılarak gelen isteklerin (body/params/query) doğrulanması sağlandı. Bu sayede; eksik/yanlış tipte veriler erken yakalanır ve tutarlı hata mesajları döner.
+- ORM: `Sequelize` (Postgres) — model, migration ve seed yapısı ile veritabanı yönetimi.
+- Nested Users: Kullanıcıların hiyerarşik ilişkisi (parent/children) model düzeyinde desteklenir ve API listelerinde expand/collapse ile frontend tarafında gösterilir.
+- API Layer: Express.js ile REST kuruldu; route'lar, controller'lar ve validator'lar ayrıldı (temiz yapı).
+- CORS: Ortam değişkenleri ile kontrol edilen whitelist mantığı eklendi (deploy sırasında Vercel/localhost gibi origin'ler eklenir).
+- Error Handling: Ortak bir errorHandler middleware'i ile Zod/Sequelize hataları ve custom validation hataları standart bir yanıt formatında döndürülüyor.
+- Testler: Jest ile backend birim/entegrasyon testleri bulunuyor (kısa testler, auth ve users uç noktaları için).
+- Dokümantasyon: `openapi.yaml` ve Postman koleksiyonu (repo içinde) — API uç noktalarını hızlıca keşfetmek için.
+
+### Kısa Mühendislik Kararları (nedenler)
+- Zod seçildi: Tip güvenli ve geliştiricide erken hata yakalama sağlıyor; ayrıca TypeScript ile iyi bütünleşiyor.
+- JWT seçildi: Stateles, kolay ölçeklenebilir oturum yönetimi için uygundur ve frontend ile kullanım kolaylığı sağlar.
+- Sequelize seçildi: Migration/seed araçları hazır, Postgres ile olgun entegrasyonu var.
+
+## API Sözleşmesi (kısa)
+
+Örnek success response ve bazı istek şekilleri:
+
+- Register (POST /api/auth/register)
+  - Body: { firstName?, lastName?, email: string, password: string }
+  - 201 Created: { user: { id, firstName, lastName, email, children? }, token }
+
+- Login (POST /api/auth/login)
+  - Body: { email: string, password: string }
+  - 200 OK: { user, token }
+
+- Get users (GET /api/users)
+  - Query: page, limit, sort, filter
+  - 200 OK: { data: [users], meta: { total, page, limit } }
+
+Hatalar genelde şu formatta döner: { error: 'message', details?: { ... } }
+
+## Güvenlik & Üretim Notları
+
+- JWT_SECRET güçlü bir değer olmalı ve prod ortamında sıkı saklanmalı.
+- DATABASE_URL içerisinde kullanıcı/şifre açık olmamalı; Railway/Render/Vercel secret manager kullanılmalı.
+- CORS whitelist üretim ortamında sadece frontend domain'lerini içermeli.
+- Rate limiting, brute-force koruması ve account lockout gibi üretim güvenlik önlemleri ileride eklenebilir.
+
+## Değişiklikler — Neler Ekledik / Neler Düzeltildi
+
+Bu repo üzerine geliştirme yaparken aşağıdaki önemli iyileştirmeler uygulandı:
+
+- Zod tabanlı validation eklendi/iyileştirildi (request body/params/query için).
+- Authentication: JWT token bazlı akış uygulandı; register/login controller'ları ve token üretimi eklendi.
+- Parola güvenliği: `bcrypt` ile hashing; seed dosyaları buna göre güncellendi.
+- CORS: Ortam değişkeni tabanlı whitelist ve debug sırasında hızlı test için temporary allow-all seçeneği eklendi (deployta revertleyin).
+- Frontend: `NEXT_PUBLIC_API_URL` ile backend bağlantısı yapılandırıldı, dashboard tabloları gerçek API verisi ile bağlandı.
+- Deployment: Railway (backend) ve Vercel (frontend) için notlar ve sık karşılaşılan deploy sorunlarına çözüm adımları eklendi.
+- README: Kurulum, migration/seed, çalıştırma, deploy ve troubleshooting bölümleri detaylandırıldı.
+
+---
+Herhangi bir sorunda veya ek bilgi için bana ulaşabilirsiniz.
