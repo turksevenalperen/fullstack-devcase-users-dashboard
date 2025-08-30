@@ -8,15 +8,26 @@ import 'dotenv/config';
 
 
 const app = express();
-app.use(express.json());
+
+// CORS whitelist - ensure this runs before body parser
 const allowedOrigins = [
   'http://localhost:3000',
   'https://fullstack-devcase-users-dashboard.vercel.app'
 ];
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
-}));
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (curl, server-to-server)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+  })
+);
+
+app.use(express.json());
 app.use(helmet());
 app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 1000 }));
 
