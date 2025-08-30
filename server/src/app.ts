@@ -15,14 +15,10 @@ const allowedOrigins = [
   process.env.ALLOWED_ORIGIN_2 || 'https://fullstack-devcase-users-dashboard.vercel.app'
 ].filter(Boolean);
 
+// TEMPORARY: allow all origins for testing (change back after verification)
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (curl, server-to-server)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error('Not allowed by CORS'));
-    },
+    origin: true,
     credentials: true,
   })
 );
