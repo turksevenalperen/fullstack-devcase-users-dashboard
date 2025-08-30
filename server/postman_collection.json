@@ -1,0 +1,445 @@
+{
+    "item": [
+        {
+            "name": "auth",
+            "description": "",
+            "item": [
+                {
+                    "name": "register",
+                    "description": "",
+                    "item": [
+                        {
+                            "id": "ba7e1d13-feb2-4bf4-9e31-7727d59b30f9",
+                            "name": "Register user",
+                            "request": {
+                                "name": "Register user",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "auth",
+                                        "register"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "327d4f19-c5ff-46b3-84d8-cb548588b128",
+                                    "name": "Created",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "auth",
+                                                "register"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Created",
+                                    "code": 201,
+                                    "header": [],
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "text"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "login",
+                    "description": "",
+                    "item": [
+                        {
+                            "id": "56453345-2408-426b-b534-7f463201ab59",
+                            "name": "Login",
+                            "request": {
+                                "name": "Login",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "auth",
+                                        "login"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "fb4d80e1-1d21-4d3e-b99e-98fe8b7fd8b6",
+                                    "name": "OK",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "auth",
+                                                "login"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [],
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "text"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "users",
+            "description": "",
+            "item": [
+                {
+                    "id": "f6f608c4-7960-4aa5-8ce4-126b127b2232",
+                    "name": "List users",
+                    "request": {
+                        "name": "List users",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "users"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "page",
+                                    "value": "<integer>"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "limit",
+                                    "value": "<integer>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "00c17578-fb98-4079-a62b-b6331ea74aae",
+                            "name": "OK",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "page",
+                                            "value": "<integer>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "limit",
+                                            "value": "<integer>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "c6388fa1-4db7-4155-8e73-c0cb46d13f9c",
+                    "name": "Create user",
+                    "request": {
+                        "name": "Create user",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "users"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "875078fd-32c0-488b-b78b-50b110d4998d",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "name": "{id}",
+                    "description": "",
+                    "item": [
+                        {
+                            "id": "1a3f997c-ceb6-4874-a888-13ab56c21ad7",
+                            "name": "Get user by id",
+                            "request": {
+                                "name": "Get user by id",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "users",
+                                        ":id"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "id",
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "body": {},
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "162bc256-b10c-439c-ab34-5c0d288c7fe5",
+                                    "name": "OK",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":id"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [],
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "text"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "event": [],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3001/api"
+        }
+    ],
+    "info": {
+        "_postman_id": "cb69440b-177c-4e65-ba65-d1ed0b844bfe",
+        "name": "Fullstack DevCase API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": {
+            "content": "",
+            "type": "text/plain"
+        }
+    }
+}
