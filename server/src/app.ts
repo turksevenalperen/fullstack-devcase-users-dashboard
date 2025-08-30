@@ -11,8 +11,9 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://fullstack-devcase-users-dashboard.vercel.app'
+  'https://fullstack-devcase-users-dashboard-aheijues1.vercel.app'
 ];
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
