@@ -6,43 +6,67 @@ import sequelize from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 import 'dotenv/config';
 
-
 const app = express();
 
-// CORS whitelist - read from env so Railway project variables are used in production
-const allowedOrigins = [
-  process.env.ALLOWED_ORIGIN_1 || 'http://localhost:3000',
-  process.env.ALLOWED_ORIGIN_2 || 'https://fullstack-devcase-users-dashboard.vercel.app'
-].filter(Boolean);
+console.log('🚀 BACKEND STARTING WITH NEW CORS CONFIG');
 
-// TEMPORARY: allow all origins for testing (change back after verification)
-// TEMPORARY: allow all origins for testing (change back after verification)
-console.log('⚠️ TEMP CORS ENABLED - allowing all origins for testing');
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+// CORS konfigürasyonu - doğru domain'ler
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://fullstack-devcase-users-dashboard-aheijues1.vercel.app'
+];
+
+console.log('✅ Allowed Origins:', allowedOrigins);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    console.log('📨 Request from origin:', origin);
+    
+    // Origin yok ise (Postman, server-to-server) izin ver
+    if (!origin) {
+      console.log('✅ No origin - allowing');
+      return callback(null, true);
+    }
+    
+    // İzin verilen origin'ler listesinde var mı kontrol et
+    if (allowedOrigins.includes(origin)) {
+      console.log('✅ Origin ALLOWED:', origin);
+      return callback(null, true);
+    } else {
+      console.log('❌ Origin BLOCKED:', origin);
+      return callback(new Error(`Origin ${origin} not allowed by CORS policy`));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  optionsSuccessStatus: 200
+}));
 
 app.use(express.json());
 app.use(helmet());
 app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 1000 }));
 
-
+// Health check endpoint
 app.get('/api/health', (req: express.Request, res: express.Response) => {
-  res.json({ status: 'ok' });
+  res.json({ 
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    allowedOrigins: allowedOrigins
+  });
 });
 
+// Import routes
 import authRoutes from './routes/auth';
 import userRoutes from './routes/users';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
+// Database connection
 sequelize.authenticate()
-  .then(() => console.log('Database connected!'))
-  .catch((err) => console.error('Database connection error:', err));
+  .then(() => console.log('✅ Database connected!'))
+  .catch((err) => console.error('❌ Database connection error:', err));
 
 app.use(errorHandler);
 

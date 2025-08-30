@@ -11,8 +11,19 @@ const database_1 = __importDefault(require("./config/database"));
 const errorHandler_1 = require("./middleware/errorHandler");
 require("dotenv/config");
 const app = (0, express_1.default)();
+// CORS whitelist - read from env so Railway project variables are used in production
+const allowedOrigins = [
+    process.env.ALLOWED_ORIGIN_1 || 'http://localhost:3000',
+    process.env.ALLOWED_ORIGIN_2 || 'https://fullstack-devcase-users-dashboard.vercel.app'
+].filter(Boolean);
+// TEMPORARY: allow all origins for testing (change back after verification)
+// TEMPORARY: allow all origins for testing (change back after verification)
+console.log('⚠️ TEMP CORS ENABLED - allowing all origins for testing');
+app.use((0, cors_1.default)({
+    origin: true,
+    credentials: true,
+}));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
 app.use((0, helmet_1.default)());
 app.use((0, express_rate_limit_1.default)({ windowMs: 1 * 60 * 1000, max: 1000 }));
 app.get('/api/health', (req, res) => {
