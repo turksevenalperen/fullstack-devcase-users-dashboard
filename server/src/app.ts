@@ -6,34 +6,54 @@ import sequelize from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 import 'dotenv/config';
 
-
 const app = express();
 
-// En başa bu log'u ekle
-console.log('🚀 SERVER STARTING WITH CORS CONFIG');
+// Başlangıç logu
+console.log('🚀 SERVER STARTING - CORS & MIDDLEWARE INITIALIZING');
 
+// Güvenli domain listesi
 const allowedOrigins = [
   'http://localhost:3000',
   'https://fullstack-devcase-users-dashboard-aheijues1.vercel.app'
 ];
 
-console.log('🔍 Allowed Origins:', allowedOrigins);
-
-app.use(cors({
-  origin: function (origin, callback) {
-    console.log('📨 CORS Request from origin:', origin);
-    
-    if (!origin) {
-      console.log('✅ No origin (probably same-origin), allowing');
-      return callback(null, true);
-    }
-    if (allowedOrigins.includes(origin)) {
-      console.log('✅ Origin ALLOWED:', origin);
-      return callback(null, true);
-    } else {
-      console.log('❌ Origin BLOCKED:', origin);
+// Dinamik CORS kontrolü
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      console.log('📨 CORS request origin=', origin);
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
       return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-}));
+    },
+    credentials: true,
+  })
+);
+
+// Body parser ve güvenlik middleware'leri
+app.use(express.json());
+app.use(helmet());
+app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 1000 }));
+
+// Health
+app.get('/api/health', (req: express.Request, res: express.Response) => {
+  res.json({ status: 'ok' });
+});
+
+// Route'lar
+import authRoutes from './routes/auth';
+import userRoutes from './routes/users';
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+
+// DB kontrolü
+sequelize
+  .authenticate()
+  .then(() => console.log('Database connected!'))
+  .catch((err) => console.error('Database connection error:', err));
+
+// Error handler
+app.use(errorHandler);
+
+export default app;
