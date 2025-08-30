@@ -9,11 +9,11 @@ import 'dotenv/config';
 
 const app = express();
 
-// CORS whitelist - ensure this runs before body parser
+// CORS whitelist - read from env so Railway project variables are used in production
 const allowedOrigins = [
-  'http://localhost:3000',
-  'https://fullstack-devcase-users-dashboard.vercel.app'
-];
+  process.env.ALLOWED_ORIGIN_1 || 'http://localhost:3000',
+  process.env.ALLOWED_ORIGIN_2 || 'https://fullstack-devcase-users-dashboard.vercel.app'
+].filter(Boolean);
 
 app.use(
   cors({
