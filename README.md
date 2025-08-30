@@ -111,27 +111,25 @@ npx sequelize db:seed:all
 - Tüm ana case gereksinimleri eksiksiz karşılandı.
 - Test dosyaları ve OpenAPI/Postman koleksiyonu eklenebilir.
 
-## Teknik Detaylar ve Kullandığımız Teknolojiler
+## Teknik Detaylar ve Kullanılan Teknolojiler
 
-Bu bölüm, projede hangi kütüphaneleri, desenleri ve önemli kararları kullandığımızı özetler.
+
 
 - Authentication: JWT tabanlı (JSON Web Tokens). Oturum açtıktan sonra backend bir access token döner; frontend bu token'ı Authorization: Bearer <token> başlığı ile isteklerde kullanır.
 - Parolalar: `bcrypt` ile tek yönlü hashlenir (register endpoint'inde), login sırasında hash karşılaştırılır.
 - Validation: `zod` kullanılarak gelen isteklerin (body/params/query) doğrulanması sağlandı. Bu sayede; eksik/yanlış tipte veriler erken yakalanır ve tutarlı hata mesajları döner.
 - ORM: `Sequelize` (Postgres) — model, migration ve seed yapısı ile veritabanı yönetimi.
 - Nested Users: Kullanıcıların hiyerarşik ilişkisi (parent/children) model düzeyinde desteklenir ve API listelerinde expand/collapse ile frontend tarafında gösterilir.
-- API Layer: Express.js ile REST kuruldu; route'lar, controller'lar ve validator'lar ayrıldı (temiz yapı).
-- CORS: Ortam değişkenleri ile kontrol edilen whitelist mantığı eklendi (deploy sırasında Vercel/localhost gibi origin'ler eklenir).
+- API Layer: Express.js ile REST kuruldu; route'lar, controller'lar ve validator'lar ayrıldı 
+- CORS: Ortam değişkenleri ile kontrol edilen whitelist mantığı eklendi 
 - Error Handling: Ortak bir errorHandler middleware'i ile Zod/Sequelize hataları ve custom validation hataları standart bir yanıt formatında döndürülüyor.
 - Testler: Jest ile backend birim/entegrasyon testleri bulunuyor (kısa testler, auth ve users uç noktaları için).
-- Dokümantasyon: `openapi.yaml` ve Postman koleksiyonu (repo içinde) — API uç noktalarını hızlıca keşfetmek için.
-
-### Kısa Mühendislik Kararları (nedenler)
+- Dokümantasyon: `openapi.yaml` ve Postman koleksiyonu (repo içinde) — API uç noktalarını hızlıca sorgulamak için.
 - Zod seçildi: Tip güvenli ve geliştiricide erken hata yakalama sağlıyor; ayrıca TypeScript ile iyi bütünleşiyor.
 - JWT seçildi: Stateles, kolay ölçeklenebilir oturum yönetimi için uygundur ve frontend ile kullanım kolaylığı sağlar.
 - Sequelize seçildi: Migration/seed araçları hazır, Postgres ile olgun entegrasyonu var.
 
-## API Sözleşmesi (kısa)
+## API Sonuçları (Özet)
 
 Örnek success response ve bazı istek şekilleri:
 
@@ -168,5 +166,4 @@ Bu repo üzerine geliştirme yaparken aşağıdaki önemli iyileştirmeler uygul
 - Deployment: Railway (backend) ve Vercel (frontend) için notlar ve sık karşılaşılan deploy sorunlarına çözüm adımları eklendi.
 - README: Kurulum, migration/seed, çalıştırma, deploy ve troubleshooting bölümleri detaylandırıldı.
 
----
-Herhangi bir sorunda veya ek bilgi için bana ulaşabilirsiniz.
+
