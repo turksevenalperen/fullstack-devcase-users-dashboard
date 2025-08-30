@@ -6,7 +6,6 @@ Bu proje, Next.js tabanlı frontend ve Node.js/Express.js + Sequelize backend il
 
 ## Özellikler
 - **Backend:**
--  Railway üzerinde PostgreSQL ile deploy edildi.
   - Express.js REST API
   - Sequelize + PostgreSQL
   - JWT tabanlı kimlik doğrulama
@@ -29,6 +28,13 @@ Bu proje, Next.js tabanlı frontend ve Node.js/Express.js + Sequelize backend il
   - Hata/boş durumlar için kullanıcı dostu geri bildirim
   - Responsive ve erişilebilir UI
   - Ortam değişkeni ile backend bağlantısı
+
+  ## Dashboard & Kullanıcı Yönetimi Özellikleri
+- Dashboard sayfasında Users API’den gelen veriler tabloya dinamik olarak aktarılır.
+- Sadece admin rolündeki kullanıcılar yeni kullanıcı ekleyebilir, silebilir ve düzenleyebilir.
+- Admin harici kullanıcılar sisteme pending (beklemede) statüsüyle üye olur; active duruma geçişi sadece admin sağlar.
+- Kullanıcıların status (pending, active, inactive) durumuna göre dinamik kartlar ve görsel geri bildirimler gösterilir.
+- Uygulamada light tema desteği mevcuttur; kullanıcı deneyimi modern ve erişilebilir şekilde tasarlanmıştır.
 
 ## Kurulum
 ### Gereksinimler
@@ -128,6 +134,8 @@ Bu bölüm, projede hangi kütüphaneleri, desenleri ve önemli kararları kulla
 - Error Handling: Ortak bir errorHandler middleware'i ile Zod/Sequelize hataları ve custom validation hataları standart bir yanıt formatında döndürülüyor.
 - Testler: Jest ile backend birim/entegrasyon testleri bulunuyor (kısa testler, auth ve users uç noktaları için).
 - Dokümantasyon: `openapi.yaml` ve Postman koleksiyonu (repo içinde) — API uç noktalarını hızlıca keşfetmek için.
+
+### Kısa Mühendislik Kararları (nedenler)
 - Zod seçildi: Tip güvenli ve geliştiricide erken hata yakalama sağlıyor; ayrıca TypeScript ile iyi bütünleşiyor.
 - JWT seçildi: Stateles, kolay ölçeklenebilir oturum yönetimi için uygundur ve frontend ile kullanım kolaylığı sağlar.
 - Sequelize seçildi: Migration/seed araçları hazır, Postgres ile olgun entegrasyonu var.
@@ -150,19 +158,24 @@ Bu bölüm, projede hangi kütüphaneleri, desenleri ve önemli kararları kulla
 
 Hatalar genelde şu formatta döner: { error: 'message', details?: { ... } }
 
+## Güvenlik & Üretim Notları
 
-## Değişiklikler — Neler Eklendi
+- JWT_SECRET güçlü bir değer olmalı ve prod ortamında sıkı saklanmalı.
+- DATABASE_URL içerisinde kullanıcı/şifre açık olmamalı; Railway/Render/Vercel secret manager kullanılmalı.
+- CORS whitelist üretim ortamında sadece frontend domain'lerini içermeli.
+- Rate limiting, brute-force koruması ve account lockout gibi üretim güvenlik önlemleri ileride eklenebilir.
+
+## Değişiklikler — Neler Ekledik / Neler Düzeltildi
 
 Bu repo üzerine geliştirme yaparken aşağıdaki önemli iyileştirmeler uygulandı:
 
 - Zod tabanlı validation eklendi/iyileştirildi (request body/params/query için).
 - Authentication: JWT token bazlı akış uygulandı; register/login controller'ları ve token üretimi eklendi.
 - Parola güvenliği: `bcrypt` ile hashing; seed dosyaları buna göre güncellendi.
-- Dashboard sayfasına canlı API lerle beslenildi 
 - CORS: Ortam değişkeni tabanlı whitelist ve debug sırasında hızlı test için temporary allow-all seçeneği eklendi (deployta revertleyin).
 - Frontend: `NEXT_PUBLIC_API_URL` ile backend bağlantısı yapılandırıldı, dashboard tabloları gerçek API verisi ile bağlandı.
 - Deployment: Railway (backend) ve Vercel (frontend) için notlar ve sık karşılaşılan deploy sorunlarına çözüm adımları eklendi.
-
+- README: Kurulum, migration/seed, çalıştırma, deploy ve troubleshooting bölümleri detaylandırıldı.
 
 ---
-
+Herhangi bir sorunda veya ek bilgi için bana ulaşabilirsiniz.
